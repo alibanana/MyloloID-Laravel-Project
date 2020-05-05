@@ -71,40 +71,18 @@
 </div>
 
 {{-- Table Shopping Cart Mobile Version --}}
-<div class="d-md-none">
-  <h1 class="text-black">TEST - CART - MOBILE</h1>
-  <div class="card w-90">
+<div class="d-md-none table-wrapper-mobile">
+  {{-- First Card --}}
+  <div class="card">
     <div class="card-body">
-      <div class="product-thumbnail">
-        <img src="/images/cartpage/product1.jpg" alt="" class="rounded float-left" class="img-thumbnail"
-          style="width:200px;height:200px;">
-      </div>
-
-      <h4 class="product-name" style="color:black" style="text-align:right">Mylo Crop Sleeve Denim</h4>
-      <p class="product-price" style="color:black" style="text-align:right">IDR 775K</p>
-      <p class="product-quantity">
-        <div class="input-group quantity-input text-align-center justify-content-center">
-          <div class="input-group-prepend">
-            <button type="button" class="btn btn-primary minus-button js-btn-minus">&minus;</button>
-          </div>
-          <input type="text" class="form-control text-center quantity-text" value="1" readonly>
-          <div class="input-group-append">
-            <button type="button" class="btn btn-primary plus-button js-btn-plus">&plus;</button>
-          </div>
+      <div class="row">
+        <div class="col-6">
+          <img src="/images/cartpage/product1.jpg" alt="" class="rounded float-left" class="img-thumbnail">
         </div>
-    </div>
-
-    <div class="card w-90">
-      <div class="card-body">
-        <div class="product-thumbnail">
-          <img src="/images/cartpage/product2.jpg" alt="" class="rounded float-left" class="img-thumbnail"
-            style="width:200px;height:200px;">
-        </div>
-
-        <h4 class="product-name" style="color:black" style="text-align:right">Mylo Half Ruffles Shirtdress</h4>
-        <p class="product-price" style="color:black" style="text-align:right">IDR 445K</p>
-        <p class="product-quantity">
-          <div class="input-group quantity-input text-align-center justify-content-center">
+        <div class="col-6 text-left d-flex flex-column">
+          <h6 class="text-dark">Mylo Crop Sleeve Denim</h6>
+          <h5 class="text-black">IDR 775K</h5>
+          <div class="input-group quantity-input mt-auto">
             <div class="input-group-prepend">
               <button type="button" class="btn btn-primary minus-button js-btn-minus">&minus;</button>
             </div>
@@ -113,6 +91,30 @@
               <button type="button" class="btn btn-primary plus-button js-btn-plus">&plus;</button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- Second Card --}}
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          <img src="/images/cartpage/product2.jpg" alt="" class="rounded float-left" class="img-thumbnail">
+        </div>
+        <div class="col-6 text-left d-flex flex-column">
+          <h6 class="text-dark">Mylo Half Ruffles Shirtdress</h6>
+          <h5 class="text-black">IDR 445K</h5>
+          <div class="input-group quantity-input mt-auto">
+            <div class="input-group-prepend">
+              <button type="button" class="btn btn-primary minus-button js-btn-minus">&minus;</button>
+            </div>
+            <input type="text" class="form-control text-center quantity-text" value="1" readonly>
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary plus-button js-btn-plus">&plus;</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
