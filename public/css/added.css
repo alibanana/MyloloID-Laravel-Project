@@ -1,38 +1,64 @@
-/* Shopping Cart Table Web Version */
+/* Wrappers Responsive Settings */
+@media (max-width: 768px) {
+    .coupon-cart-wrapper {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
 @media (min-width: 768px) {
-    .table-wrap {
+    .table-wrapper-web {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    .coupon-cart-wrapper {
         padding-left: 5%;
         padding-right: 5%;
     }
 }
 
 @media (min-width: 992px) {
-    .table-wrap {
+    .table-wrapper-web {
         padding-left: 10%;
         padding-right: 10%;
+    }
+    .coupon-cart-wrapper {
+        padding-left: 5%;
+        padding-right: 5%;
     }
 }
 
 @media (min-width: 1200px) {
-    .table-wrap {
+    .table-wrapper-web {
         padding-left: 15%;
         padding-right: 15%;
     }
+    .coupon-cart-wrapper {
+        padding-left: 10%;
+        padding-right: 10%;
+        max-width: 1600px;
+    }
 }
 
-.table-wrap .product-quantity {
+/* Shopping Cart Table Web Childs */
+.table-wrapper-web .product-quantity {
     min-width: 220px;
 }
 
-.table-wrap .quantity-input .minus-button,
+.table-wrapper-web .quantity-input .minus-button,
 .plus-button,
 .quantity-text {
     max-width: 45px;
     width: 100%;
 }
 
-.table-wrap .quantity-text:read-only {
+.table-wrapper-web .quantity-text:read-only {
     background-color: white;
 }
 
-/* Mobile Version */
+.table-wrapper-web .coupon-input,
+.coupon-input-button,
+.update-cart-button {
+    height: 45px;
+    border-radius: 15px;
+}
