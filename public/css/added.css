@@ -1,0 +1,38 @@
+/* Shopping Cart Table Web Version */
+@media (min-width: 768px) {
+    .table-wrap {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+@media (min-width: 992px) {
+    .table-wrap {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .table-wrap {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
+.table-wrap .product-quantity {
+    min-width: 220px;
+}
+
+.table-wrap .quantity-input .minus-button,
+.plus-button,
+.quantity-text {
+    max-width: 45px;
+    width: 100%;
+}
+
+.table-wrap .quantity-text:read-only {
+    background-color: white;
+}
+
+/* Mobile Version */
