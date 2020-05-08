@@ -8,11 +8,11 @@ class PagesController extends Controller
 {
     public function home()
     {
-        return view('index');
+        return view('client/index');
     }
 
     public function cart()
     {
-        return view('shopping_cart');
+        return view('client/shopping_cart');
     }
 }
