@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-
+// Home Page
 Route::get('/', 'PagesController@home');
+
+// Product / Catalogue page
+Route::get('/catalogue', 'CatalogueController@index');
+
+// Cart Page
 Route::get('/cart', 'PagesController@cart');

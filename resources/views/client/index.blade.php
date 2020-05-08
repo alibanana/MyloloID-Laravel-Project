@@ -1,6 +1,6 @@
-@extends('layout/main')
+@extends('layout/main-client')
 
-@section('title', 'MyloloID Home')
+@section('title', 'Dashboard')
 
 @section('container')
 

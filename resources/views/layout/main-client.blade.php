@@ -53,7 +53,7 @@
                 <ul class="site-menu js-clone-nav d-none d-md-block">
                   <li><a href="/">Home</a></li>
                   <li class="has-children">
-                    <a href="about.html">Catalogue</a>
+                    <a href="/catalogue">Catalogue</a>
                     <ul class="dropdown">
                       <li><a href="#">Bottoms</a></li>
                       <li><a href="#">Blazers/Jacket</a></li>
@@ -104,7 +104,7 @@
               <div class="col-6">
                 <ul class="list-unstyled">
                   <li><a href="/">Home</a></li>
-                  <li><a href="#">Catalogue</a></li>
+                  <li><a href="/catalogue">Catalogue</a></li>
                   <li><a href="/cart">Shopping cart</a></li>
                 </ul>
               </div>
