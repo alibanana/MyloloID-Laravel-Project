@@ -1,6 +1,6 @@
-@extends('layout/main-client')
+@extends('layouts/main-client')
 
-@section('title', 'Dashboard')
+@section('title', 'Home')
 
 @section('container')
 

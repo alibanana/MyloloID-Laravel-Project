@@ -25,3 +25,9 @@ Route::get('/catalogue', 'CatalogueController@index');
 
 // Cart Page
 Route::get('/cart', 'PagesController@cart');
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::get('/admin/dashboard', 'DashboardController@adminHome')->name('admin.dashboard')->middleware('is_admin');
