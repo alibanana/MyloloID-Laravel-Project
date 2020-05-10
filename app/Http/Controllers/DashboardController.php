@@ -25,14 +25,4 @@ class DashboardController extends Controller
     {
         return view('client/dashboard');
     }
-
-    /**
-     * Show the admin dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function adminHome()
-    {
-        return view('admin/dashboard');
-    }
 }

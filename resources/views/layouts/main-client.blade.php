@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700">
 
   {{-- CSS From Shoppers Template --}}
-  <link rel="stylesheet" href="templates/fonts/icomoon/style.css">
-  <link rel="stylesheet" href="templates/css/bootstrap.min.css">
-  <link rel="stylesheet" href="templates/css/magnific-popup.css">
-  <link rel="stylesheet" href="templates/css/jquery-ui.css">
-  <link rel="stylesheet" href="templates/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="templates/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="templates/css/aos.css">
-  <link rel="stylesheet" href="templates/css/style.css">
+  <link rel="stylesheet" href="templates/client/fonts/icomoon/style.css">
+  <link rel="stylesheet" href="templates/client/css/bootstrap.min.css">
+  <link rel="stylesheet" href="templates/client/css/magnific-popup.css">
+  <link rel="stylesheet" href="templates/client/css/jquery-ui.css">
+  <link rel="stylesheet" href="templates/client/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="templates/client/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="templates/client/css/aos.css">
+  <link rel="stylesheet" href="templates/client/css/style.css">
 
   {{-- Own CSS --}}
   <link rel="stylesheet" href="/css/added.css">
@@ -158,14 +158,14 @@
   </div>
 
   {{-- Javascripts from Shoppers Template --}}
-  <script src="templates/js/jquery-3.3.1.min.js"></script>
-  <script src="templates/js/jquery-ui.js"></script>
-  <script src="templates/js/popper.min.js"></script>
-  <script src="templates/js/bootstrap.min.js"></script>
-  <script src="templates/js/owl.carousel.min.js"></script>
-  <script src="templates/js/jquery.magnific-popup.min.js"></script>
-  <script src="templates/js/aos.js"></script>
-  <script src="templates/js/main.js"></script>
+  <script src="templates/client/js/jquery-3.3.1.min.js"></script>
+  <script src="templates/client/js/jquery-ui.js"></script>
+  <script src="templates/client/js/popper.min.js"></script>
+  <script src="templates/client/js/bootstrap.min.js"></script>
+  <script src="templates/client/js/owl.carousel.min.js"></script>
+  <script src="templates/client/js/jquery.magnific-popup.min.js"></script>
+  <script src="templates/client/js/aos.js"></script>
+  <script src="templates/client/js/main.js"></script>
 
 </body>
 
