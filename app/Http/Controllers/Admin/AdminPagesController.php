@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AdminPagesController extends Controller
 {
@@ -34,11 +35,6 @@ class AdminPagesController extends Controller
     public function users()
     {
         return view('admin/users');
-    }
-
-    public function products()
-    {
-        return view('admin/products');
     }
 
     public function profile()

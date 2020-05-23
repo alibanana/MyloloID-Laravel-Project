@@ -1,0 +1,38 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
+{
+    // A product belongs to only one category
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
+
+    // A product has many photos
+    public function photos()
+    {
+        return $this->hasMany('App\Photos');
+    }
+
+    // A product may have more than one materials
+    public function materials()
+    {
+        return $this->belongsToMany('App\Material');
+    }
+    
+    // A product may have more than one sizes
+    public function sizes()
+    {
+        return $this->belongsToMany('App\Size');
+    }
+    
+    // A product may have more than one sizes
+    public function colours()
+    {
+        return $this->belongsToMany('App\Colour');
+    }
+}
