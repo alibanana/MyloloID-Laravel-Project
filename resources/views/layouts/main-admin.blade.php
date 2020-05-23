@@ -18,10 +18,6 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('templates/admin/css/sb-admin-2.min.css') }}" rel="stylesheet" type="text/css">
-
-  {{-- Added-Admin CSS --}}
-  <link href="{{ asset('css/added-admin.css') }}" rel="stylesheet" type="text/css">
-  @yield('links')
 </head>
 
 <body id="page-top">
@@ -87,7 +83,7 @@
       </li>
 
       <!-- Nav Item - Products -->
-      <li class="nav-item @if (\Request::is('admin/products/*')) active @endif">
+      <li class="nav-item @if (\Request::is('admin/products')) active @endif">
         <a class="nav-link" href="/admin/products">
           <i class="fas fa-fw fa-box-open"></i>
           <span>Products</span></a>
@@ -264,8 +260,6 @@
 
   <!-- Page level plugins -->
   <script src="{{ asset('templates/admin/vendor/chart.js/Chart.min.js') }}"></script>
-
-  @yield('scripts')
 </body>
 
 </html>
