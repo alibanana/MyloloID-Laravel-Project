@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $fillable = ['category_id', 'name', 'description', 'price', 'is_available'];
+
     // A product belongs to only one category
     public function category()
     {
@@ -15,7 +17,7 @@ class Product extends Model
     // A product has many photos
     public function photos()
     {
-        return $this->hasMany('App\Photos');
+        return $this->hasMany('App\Photo');
     }
 
     // A product may have more than one materials

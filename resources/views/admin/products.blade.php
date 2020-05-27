@@ -17,7 +17,8 @@
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         @foreach ($categories as $category)
-        <a class="dropdown-item @if ($category->category == $active_category->category) active
+        <a class="dropdown-item 
+        @if ($category->category == $active_category->category) active
         @endif" href="/admin/products/category/{{ $category->category }}">{{ $category->category }}</a>
         @endforeach
       </div>
@@ -38,25 +39,26 @@
     </tr>
   </thead>
   <tbody>
+    @foreach ($products as $product)
     <tr>
-      <th scope="row">1</th>
+      <th scope="row">{{ $loop->iteration }}</th>
       <td class="product-thumbnail p-0 text-center">
-        <img src="/images/adminpage/Product1.jpg" alt="" class="img-thumbnail">
+        <img src="/uploads/images/{{ $product->photos()->first()->file }}" alt="" class="img-thumbnail">
       </td>
-      <td>ProductName</td>
-      <td>IDR XXXK</td>
-      <td>Yes/No</td>
+      <td>{{ $product->name }}</td>
+      <td>IDR {{ $product->price }}</td>
+      <td>@if ($product->available) Yes @else No @endif</td>
       <td>
-        {{-- <form action="{{ route('file.destroy', $datas->id) }}" method="post"> --}}
-        {{ csrf_field() }}
-        {{ method_field('DELETE') }}
-        {{-- <a href="{{ route('file.edit',$datas->id) }}" class=" btn btn-sm btn-primary">Edit</a> --}}
-        <a href="" class=" btn btn-sm btn-primary">Details</a>
-        <button class="btn btn-sm btn-danger" type="submit"
-          onclick="return confirm('Yakin ingin menghapus data?')">Delete</button>
-        {{-- </form> --}}
+        <form action="{{ route('products.destroy', $product->id) }}" method="post">
+          {{ csrf_field() }}
+          {{ method_field('DELETE') }}
+          <a href="{{ route('products.edit', $product->id) }}" class=" btn btn-sm btn-primary">Details</a>
+          <button class="btn btn-sm btn-danger" type="submit"
+            onclick="return confirm('Yakin ingin menghapus data?')">Delete</button>
+        </form>
       </td>
     </tr>
+    @endforeach
   </tbody>
 </table>
 

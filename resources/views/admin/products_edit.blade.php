@@ -1,6 +1,6 @@
 @extends('layouts.main-admin')
 
-@section('title', 'Admin Create Product')
+@section('title', 'Admin Edit Product')
 
 @section('links')
 <link href="{{ asset('css/jquery-editable-select.css') }}" rel="stylesheet" type="text/css">
@@ -8,10 +8,11 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1>Create Product Here (On Progress)</h1>
+<h1>Edit Product Here (On Progress)</h1>
 
-<form enctype="multipart/form-data" action="{{ route('products.store') }}" method="post">
+<form enctype="multipart/form-data" action="{{ route('products.update', $product->id) }}" method="post">
   {{ csrf_field() }}
+  {{ method_field('PUT') }}
 
   <div class="container">
     {{-- Categories Input --}}
@@ -19,7 +20,8 @@
       <label for="inputCategory">Categories</label>
       <select id="inputCategory" class="form-control" name="category" required>
         @foreach ($categories as $category)
-        <option @if ($loop->first) selected @endif>{{ $category->category }}</option>
+        <option @if ($category==$product->category) selected
+          @endif>{{ $category->category }}</option>
         @endforeach
       </select>
     </div>
@@ -28,33 +30,38 @@
     <div class="form-group">
       <label for="inputProductName">Name</label>
       <input type="text" class="form-control" id="inputProductName" name="name" placeholder="Mylo Crop Sleeve Denim"
-        required>
+        required value="{{ $product->name }}">
     </div>
 
     {{-- Product Description --}}
     <div class="form-group">
       <label for="inputProductDescription">Description</label>
       <textarea class="form-control" id="inputProductDescription" name="description"
-        placeholder="Required product description" required></textarea>
+        placeholder="Required product description" required>{{ $product->description }}</textarea>
     </div>
 
     {{-- Product Price --}}
-    <div class="form-group">
+    <div class=" form-group">
       <label for="inputProductPrice">Price (IDR)</label>
-      <input type="number" class="form-control" id="inputProductPrice" name="price" placeholder="449000" required>
+      <input type="number" class="form-control" id="inputProductPrice" name="price" placeholder="449000" required
+        value="{{ $product->price }}">
     </div>
 
     {{-- Materials Input --}}
     <div class="form-group mb-0">
       <label for="inputMaterialRow">Materials</label>
       <div class="row" id="inputMaterialRow">
+        @foreach($product->materials()->get() as $productMaterial)
         <div class="col-4 mb-4">
           <select id="inputMaterial" class="form-control" name="materials[]" required>
             @foreach ($materials as $material)
-            <option @if ($loop->first) selected @endif>{{ $material->material }}</option>
+            <option @if ($productMaterial->material==$material->material) selected
+              @endif>{{ $material->material }}
+            </option>
             @endforeach
           </select>
         </div>
+        @endforeach
         <div class="col-4 mb-4" id="addMaterialButtonCol">
           <div class="row justify-content-center">
             <a role="button" class="btn btn-success text-white col-5 mx-2" id="addMaterialButton"
@@ -70,13 +77,16 @@
     <div class="form-group mb-0">
       <label for="inputColourRow">Colours</label>
       <div class="row" id="inputColourRow">
+        @foreach($product->colours()->get() as $productColour)
         <div class="col-4 mb-4">
           <select id="inputColour" class="form-control" name="colours[]" required>
             @foreach ($colours as $colour)
-            <option @if ($loop->first) selected @endif>{{ $colour->colour }}</option>
+            <option @if ($productColour->colour==$colour->colour) selected @endif>{{ $colour->colour }}
+            </option>
             @endforeach
           </select>
         </div>
+        @endforeach
         <div class="col-4 mb-4" id="addColourButtonCol">
           <div class="row justify-content-center">
             <a role="button" class="btn btn-success text-white col-5 mx-2" id="addColourButton"
@@ -92,13 +102,15 @@
     <div class="form-group mb-0">
       <label for="inputSizeRow">Sizes</label>
       <div class="row" id="inputSizeRow">
+        @foreach($product->sizes()->get() as $productSize)
         <div class="col-4 mb-4">
           <select id="inputSize" class="form-control" name="sizes[]" required>
             @foreach ($sizes as $size)
-            <option @if ($loop->first) selected @endif>{{ $size->size }}</option>
+            <option @if ($productSize->size==$size->size) selected @endif>{{ $size->size }}</option>
             @endforeach
           </select>
         </div>
+        @endforeach
         <div class="col-4 mb-4" id="addSizeButtonCol">
           <div class="row justify-content-center">
             <a role="button" class="btn btn-success text-white col-5 mx-2" id="addSizeButton" onclick="addSize()">Add
@@ -118,15 +130,17 @@
 
   {{-- Image Previews --}}
   <div class="row justify-content-center" id="previewImageParent">
+    @foreach($product->photos as $photo)
     <div class="card col-3 mb-4 mx-3">
-      <div class="image-preview mx-auto" id="previewContainer0">
-        <img src="..." alt="Image Preview" id="previewImage0">
+      <div class="image-preview-edit mx-auto" id="previewContainer0">
+        <img src="{{ asset('uploads/images/'.$photo->file) }}" alt="Image Preview" id="previewImage0">
         <span id="previewImageText0">Image Preview</span>
       </div>
       <div class="card-body">
-        <p class="card-text" id="previewFileName0">filename.jpg</p>
+        <p class="card-text" id="previewFileName0">{{ $photo->file }}</p>
       </div>
     </div>
+    @endforeach
   </div>
 
   {{-- Submit & Cancel Button --}}

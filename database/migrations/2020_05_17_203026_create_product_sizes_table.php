@@ -20,11 +20,12 @@ class CreateProductSizesTable extends Migration
         });
 
         Schema::create('product_size', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('size_id');
             $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
-            $table->string('size_details', 255);
+            $table->string('size_details', 255)->default('default size_details');
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ class CreateProductMaterialsTable extends Migration
         });
 
         Schema::create('material_product', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('material_id');

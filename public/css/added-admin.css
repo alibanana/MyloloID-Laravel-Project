@@ -29,3 +29,27 @@
     max-width: 100%;
     max-height: 250px;
 }
+
+.image-preview-edit {
+    width: 100%;
+    min-height: 150px;
+    border: 2px solid #dddddd;
+    margin-top: 15px;
+
+    /* Default Text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #cccccc;
+}
+
+.image-preview-edit img {
+    display: block;
+    max-width: 100%;
+    max-height: 250px;
+}
+
+.image-preview-edit span {
+    display: none;
+}
