@@ -35,10 +35,12 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::get('/admin/dashboard', 'Admin\AdminPagesController@index')->name('admin.dashboard')->middleware('is_admin');
 Route::get('/admin/transactions', 'Admin\AdminPagesController@transactions')->name('admin.transactions')->middleware('is_admin');
 Route::get('/admin/sales', 'Admin\AdminPagesController@sales')->name('admin.sales')->middleware('is_admin');
-Route::get('/admin/reports', 'Admin\AdminPagesController@reports')->name('admin.reports')->middleware('is_admin');
-Route::get('/admin/users', 'Admin\AdminPagesController@users')->name('admin.users')->middleware('is_admin');
+Route::get('/admin/reports', 'Admin\AdminPagesController@reports')->name('admin.reports')->middleware('is_admin');  
 Route::get('/admin/profile', 'Admin\AdminPagesController@profile')->name('admin.profile')->middleware('is_admin');
 
 // Products Routes
 Route::resource('/admin/products', 'Admin\ProductController')->middleware('is_admin');
 Route::get('/admin/products/category/{category}', 'Admin\ProductController@subindex')->name('admin.product.category')->middleware('is_admin');
+
+// User Routes
+Route::resource('/admin/users', 'Admin\UserController')->middleware('is_admin');

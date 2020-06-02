@@ -8,7 +8,7 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1>Create Product Here (On Progress)</h1>
+<h1>Create a Product Here (On Progress)</h1>
 
 <form enctype="multipart/form-data" action="{{ route('products.store') }}" method="post">
   {{ csrf_field() }}
