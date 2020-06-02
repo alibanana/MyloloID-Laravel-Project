@@ -61,123 +61,20 @@
 
         {{-- Row containing the products --}}
         <div class="row mb-5">
+          @foreach ($products as $product)
           <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller1.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Jacket</a></h3>
-                <p class="mb-0">Mylo Multicolor Jacket</p>
-                <p class="text-primary font-weight-bold">IDR 399k</p>
+            <div class="product-container">
+              <div class="row product-thumbnail justify-content-center align-items-top m-0"><img
+                  src="{{ asset('uploads/images/'.(Http::get('http://mylolo-id.test/api/products/'.$product['id'].'/thumbnail')['data']['file'])) }}"
+                  alt="Image placeholder" class="">
+              </div>
+              <div class="text-center product-thumbnail-text">
+                <p class="">{{ $product['name'] }}</p>
+                <p class="text-primary font-weight-bold">IDR {{ $product['price'] }}</p>
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller2.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Tops</a></h3>
-                <p class="mb-0">Mylo Mesh Wrinkled Top</p>
-                <p class="text-primary font-weight-bold">IDR 359k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller3.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Tops</a></h3>
-                <p class="mb-0">Mylo Ruffle Top</p>
-                <p class="text-primary font-weight-bold">IDR 379k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller4.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Dress</a></h3>
-                <p class="mb-0">Mylo Slashed Dress</p>
-                <p class="text-primary font-weight-bold">IDR 349k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller1.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Jacket</a></h3>
-                <p class="mb-0">Mylo Multicolor Jacket</p>
-                <p class="text-primary font-weight-bold">IDR 399k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller2.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Tops</a></h3>
-                <p class="mb-0">Mylo Mesh Wrinkled Top</p>
-                <p class="text-primary font-weight-bold">IDR 359k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller3.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Tops</a></h3>
-                <p class="mb-0">Mylo Ruffle Top</p>
-                <p class="text-primary font-weight-bold">IDR 379k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller4.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Dress</a></h3>
-                <p class="mb-0">Mylo Slashed Dress</p>
-                <p class="text-primary font-weight-bold">IDR 349k</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-            <div class="block-4 text-center">
-              <figure class="block-4-image">
-                <a href="shop-single.html"><img src="images/homepage/bestseller1.jpg" alt="Image placeholder"
-                    class="img-fluid"></a>
-              </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="#">Jacket</a></h3>
-                <p class="mb-0">Mylo Multicolor Jacket</p>
-                <p class="text-primary font-weight-bold">IDR 399k</p>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
 
         {{-- List of pages available --}}
@@ -210,7 +107,8 @@
             <li class="mb-1"><a href="#" class="d-flex"><span>Outers-Coat</span> <span
                   class="text-black ml-auto">(9)</span></a></li>
             <li class="mb-1"><a href="#" class="d-flex"><span>Tops</span> <span
-                  class="text-black ml-auto">(32)</span></a></li>
+                  class="text-black ml-auto">(32)</span></a>
+            </li>
             <li class="mb-1"><a href="#" class="d-flex"><span>Dresses</span> <span
                   class="text-black ml-auto">(15)</span></a></li>
             <li class="mb-1"><a href="#" class="d-flex"><span>Jumpsuits</span> <span

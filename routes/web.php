@@ -25,6 +25,7 @@ Route::get('/cart', 'PagesController@cart');
 
 // Product / Catalogue page
 Route::get('/catalogue', 'CatalogueController@index');
+Route::get('/catalogue/{category}', 'CatalogueController@subindex')->name('catalogue.category');
 
 Auth::routes();
 

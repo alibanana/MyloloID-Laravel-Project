@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
+use App\Category;
+use App\Product;
 
 class CatalogueController extends Controller
 {
@@ -12,8 +16,30 @@ class CatalogueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    { 
+        // Gets first category available and call subindex
+        $response = Http::get('http://mylolo-id.test/api/categories/first');
+
+        return redirect('catalogue/'.$response['data']['category']);
+    }
+
+    public function subindex($category)
     {
-        return view('client/catalogue');
+        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
+
+        // Set active_category from the param given
+        foreach ($categories as $category_itr)
+        {
+            if ($category_itr['category'] == $category)
+            {
+                $active_category = $category_itr;
+            }
+        }
+
+        // Get products in that category
+        $products = Http::get('http://mylolo-id.test/api/categories/'.$active_category['id'])['data']['products'];
+
+        return view('client/catalogue', compact('categories', 'active_category', 'products'));
     }
 
     /**
@@ -43,9 +69,23 @@ class CatalogueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($category)
     {
-        //
+        $categories = Category::all();
+
+        // Set active_category from the param given
+        foreach ($categories as $category_itr)
+        {
+            if ($category_itr->category == $category)
+            {
+                $active_category = $category_itr;
+            }
+        }
+
+        // Get products
+        $products = $active_category->products()->get();
+
+        return view('client/catalogue', compact('categories', 'active_category', 'products'));
     }
 
     /**

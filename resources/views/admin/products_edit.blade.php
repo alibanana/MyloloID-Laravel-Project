@@ -10,7 +10,7 @@
 <!-- Page Heading -->
 <h1>Edit Product Here (On Progress)</h1>
 
-<form enctype="multipart/form-data" action="{{ route('products.update', $product->id) }}" method="post">
+<form enctype="multipart/form-data" action="{{ route('admin.products.update', $product['id']) }}" method="post">
   {{ csrf_field() }}
   {{ method_field('PUT') }}
 
@@ -20,8 +20,7 @@
       <label for="inputCategory">Categories</label>
       <select id="inputCategory" class="form-control" name="category" required>
         @foreach ($categories as $category)
-        <option @if ($category==$product->category) selected
-          @endif>{{ $category->category }}</option>
+        <option @if ($category==$product['category']) selected @endif>{{ $category['category'] }}</option>
         @endforeach
       </select>
     </div>
@@ -30,34 +29,35 @@
     <div class="form-group">
       <label for="inputProductName">Name</label>
       <input type="text" class="form-control" id="inputProductName" name="name" placeholder="Mylo Crop Sleeve Denim"
-        required value="{{ $product->name }}">
+        required value="{{ $product['name'] }}">
     </div>
 
     {{-- Product Description --}}
     <div class="form-group">
       <label for="inputProductDescription">Description</label>
       <textarea class="form-control" id="inputProductDescription" name="description"
-        placeholder="Required product description" required>{{ $product->description }}</textarea>
+        placeholder="Required product description" required>{{ $product['description'] }}</textarea>
     </div>
 
     {{-- Product Price --}}
     <div class=" form-group">
       <label for="inputProductPrice">Price (IDR)</label>
       <input type="number" class="form-control" id="inputProductPrice" name="price" placeholder="449000" required
-        value="{{ $product->price }}">
+        value="{{ $product['price'] }}">
     </div>
 
     {{-- Materials Input --}}
     <div class="form-group mb-0">
       <label for="inputMaterialRow">Materials</label>
       <div class="row" id="inputMaterialRow">
-        @foreach($product->materials()->get() as $productMaterial)
+        @foreach($product['materials'] as $productMaterial)
         <div class="col-4 mb-4">
-          <select id="inputMaterial" class="form-control" name="materials[]" required>
+          <select id="inputMaterial{{ $loop->index }}" class="form-control" name="materials[]" required>
             @foreach ($materials as $material)
-            <option @if ($productMaterial->material==$material->material) selected
-              @endif>{{ $material->material }}
-            </option>
+            @if ($productMaterial['material']==$material['material'])
+            <option selected>{{ $material['material'] }}</option>
+            @else
+            <option>{{ $material['material'] }}</option>@endif
             @endforeach
           </select>
         </div>
@@ -77,12 +77,15 @@
     <div class="form-group mb-0">
       <label for="inputColourRow">Colours</label>
       <div class="row" id="inputColourRow">
-        @foreach($product->colours()->get() as $productColour)
+        @foreach($product['colours'] as $productColour)
         <div class="col-4 mb-4">
-          <select id="inputColour" class="form-control" name="colours[]" required>
+          <select id="inputColour{{ $loop->index }}" class="form-control" name="colours[]" required>
             @foreach ($colours as $colour)
-            <option @if ($productColour->colour==$colour->colour) selected @endif>{{ $colour->colour }}
-            </option>
+            @if ($productColour['colour']==$colour['colour'])
+            <option selected>{{ $colour['colour'] }}</option>
+            @else
+            <option>{{ $colour['colour'] }}</option>
+            @endif
             @endforeach
           </select>
         </div>
@@ -102,11 +105,11 @@
     <div class="form-group mb-0">
       <label for="inputSizeRow">Sizes</label>
       <div class="row" id="inputSizeRow">
-        @foreach($product->sizes()->get() as $productSize)
+        @foreach($product['sizes'] as $productSize)
         <div class="col-4 mb-4">
-          <select id="inputSize" class="form-control" name="sizes[]" required>
+          <select id="inputSize{{ $loop->index }}" class="form-control" name="sizes[]" required>
             @foreach ($sizes as $size)
-            <option @if ($productSize->size==$size->size) selected @endif>{{ $size->size }}</option>
+            <option @if ($productSize['size']==$size['size']) selected @endif>{{ $size['size'] }}</option>
             @endforeach
           </select>
         </div>
@@ -130,14 +133,14 @@
 
   {{-- Image Previews --}}
   <div class="row justify-content-center" id="previewImageParent">
-    @foreach($product->photos as $photo)
+    @foreach($product['photos'] as $photo)
     <div class="card col-3 mb-4 mx-3">
       <div class="image-preview-edit mx-auto" id="previewContainer0">
-        <img src="{{ asset('uploads/images/'.$photo->file) }}" alt="Image Preview" id="previewImage0">
+        <img src="{{ asset('uploads/images/'.$photo['file']) }}" alt="Image Preview" id="previewImage0">
         <span id="previewImageText0">Image Preview</span>
       </div>
       <div class="card-body">
-        <p class="card-text" id="previewFileName0">{{ $photo->file }}</p>
+        <p class="card-text" id="previewFileName0">{{ $photo['file'] }}</p>
       </div>
     </div>
     @endforeach
@@ -160,10 +163,25 @@
 <script src="{{ asset('js/jquery-editable-select.js') }}"></script>
 <script>
   $('#inputCategory').editableSelect({ filter: false });
-  $('#inputMaterial').editableSelect({ filter: false });
-  $('#inputColour').editableSelect({ filter: false });
-  $('#inputSize').editableSelect({ filter: false });
 </script>
+
+@foreach($product['materials'] as $material)
+<script>
+  $('#inputMaterial' + {{ $loop->index }}).editableSelect({ filter: false });
+</script>
+@endforeach
+
+@foreach($product['colours'] as $colour)
+<script>
+  $('#inputColour' + {{ $loop->index }}).editableSelect({ filter: false });
+</script>
+@endforeach
+
+@foreach($product['sizes'] as $size)
+<script>
+  $('#inputSize' + {{ $loop->index }}).editableSelect({ filter: false });
+</script>
+@endforeach
 
 {{-- Script for Materials Input --}}
 <script>
@@ -174,7 +192,7 @@
     var newinput = '<div class="col-4 mb-4">\n' +
     '<select id="inputMaterial' + childcount + '" class="form-control" name="materials[]" required>\n' +
     '@foreach ($materials as $material)\n' +
-    '<option @if ($loop->first) selected @endif>{{ $material->material }}</option>\n' +
+    "<option @if ($loop->first) selected @endif>{{ $material['material'] }}</option>\n" +
     '@endforeach\n' +
     '</select>\n' + '</div>';
 
@@ -201,7 +219,7 @@
     var newinput = '<div class="col-4 mb-4">\n' +
     '<select id="inputColour' + childcount + '" class="form-control" name="colours[]" required>\n' +
     '@foreach ($colours as $colour)\n' +
-    '<option @if ($loop->first) selected @endif>{{ $colour->colour }}</option>\n' +
+    "<option @if ($loop->first) selected @endif>{{ $colour['colour'] }}</option>\n" +
     '@endforeach\n' +
     '</select>\n' + '</div>';
 
@@ -228,7 +246,7 @@
     var newinput = '<div class="col-4 mb-4">\n' +
     '<select id="inputSize' + childcount + '" class="form-control" name="sizes[]" required>\n' +
     '@foreach ($sizes as $size)\n' +
-    '<option @if ($loop->first) selected @endif>{{ $size->size }}</option>\n' +
+    "<option @if ($loop->first) selected @endif>{{ $size['size'] }}</option>\n" +
     '@endforeach\n' +
     '</select>\n' + '</div>';
 

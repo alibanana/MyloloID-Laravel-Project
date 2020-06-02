@@ -8,9 +8,9 @@
 
 @section('content')
 <!-- Page Heading -->
-<h1>Create a Product Here (On Progress)</h1>
+<h1>Create Product Here (On Progress)</h1>
 
-<form enctype="multipart/form-data" action="{{ route('products.store') }}" method="post">
+<form enctype="multipart/form-data" action="{{ route('admin.products.store') }}" method="post">
   {{ csrf_field() }}
 
   <div class="container">
@@ -19,7 +19,7 @@
       <label for="inputCategory">Categories</label>
       <select id="inputCategory" class="form-control" name="category" required>
         @foreach ($categories as $category)
-        <option @if ($loop->first) selected @endif>{{ $category->category }}</option>
+        <option @if ($loop->first) selected @endif>{{ $category['category'] }}</option>
         @endforeach
       </select>
     </div>
@@ -51,7 +51,7 @@
         <div class="col-4 mb-4">
           <select id="inputMaterial" class="form-control" name="materials[]" required>
             @foreach ($materials as $material)
-            <option @if ($loop->first) selected @endif>{{ $material->material }}</option>
+            <option @if ($loop->first) selected @endif>{{ $material['material'] }}</option>
             @endforeach
           </select>
         </div>
@@ -73,7 +73,7 @@
         <div class="col-4 mb-4">
           <select id="inputColour" class="form-control" name="colours[]" required>
             @foreach ($colours as $colour)
-            <option @if ($loop->first) selected @endif>{{ $colour->colour }}</option>
+            <option @if ($loop->first) selected @endif>{{ $colour['colour'] }}</option>
             @endforeach
           </select>
         </div>
@@ -95,7 +95,7 @@
         <div class="col-4 mb-4">
           <select id="inputSize" class="form-control" name="sizes[]" required>
             @foreach ($sizes as $size)
-            <option @if ($loop->first) selected @endif>{{ $size->size }}</option>
+            <option @if ($loop->first) selected @endif>{{ $size['size'] }}</option>
             @endforeach
           </select>
         </div>
@@ -160,7 +160,7 @@
     var newinput = '<div class="col-4 mb-4">\n' +
     '<select id="inputMaterial' + childcount + '" class="form-control" name="materials[]" required>\n' +
     '@foreach ($materials as $material)\n' +
-    '<option @if ($loop->first) selected @endif>{{ $material->material }}</option>\n' +
+    "<option @if ($loop->first) selected @endif>{{ $material['material'] }}</option>\n" +
     '@endforeach\n' +
     '</select>\n' + '</div>';
 
@@ -187,7 +187,7 @@
     var newinput = '<div class="col-4 mb-4">\n' +
     '<select id="inputColour' + childcount + '" class="form-control" name="colours[]" required>\n' +
     '@foreach ($colours as $colour)\n' +
-    '<option @if ($loop->first) selected @endif>{{ $colour->colour }}</option>\n' +
+    "<option @if ($loop->first) selected @endif>{{ $colour['colour'] }}</option>\n" +
     '@endforeach\n' +
     '</select>\n' + '</div>';
 
@@ -214,7 +214,7 @@
     var newinput = '<div class="col-4 mb-4">\n' +
     '<select id="inputSize' + childcount + '" class="form-control" name="sizes[]" required>\n' +
     '@foreach ($sizes as $size)\n' +
-    '<option @if ($loop->first) selected @endif>{{ $size->size }}</option>\n' +
+    "<option @if ($loop->first) selected @endif>{{ $size['size'] }}</option>\n" +
     '@endforeach\n' +
     '</select>\n' + '</div>';
 
@@ -263,6 +263,9 @@
 
         reader.readAsDataURL(file);
       }
+    } else
+    {
+      addImagePreview(1);
     }
   };
 
