@@ -43,7 +43,6 @@
     <tr>
       <th scope="row">{{ $loop->iteration }}</th>
       <td class="product-thumbnail p-0 text-center">
-        {{-- <img src="/uploads/images/{{ $product->photos()->first()->file }}" alt="" class="img-thumbnail"> --}}
         <img
           src="/uploads/images/{{ Http::get('http://mylolo-id.test/api/products/'.$product['id'].'/thumbnail')['data']['file'] }}"
           alt="" class="img-thumbnail">

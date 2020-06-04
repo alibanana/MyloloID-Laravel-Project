@@ -29,6 +29,8 @@ Route::post('register', 'API\RegisterController@register');
 Route::get('categories', 'API\ProductServiceController@getCategories')->name('productService.categories.index');
 Route::get('categories/first', 'API\ProductServiceController@getFirstCategory')->name('productService.categories.first');
 Route::get('categories/{category}', 'API\ProductServiceController@showCategory')->name('productService.categories.show');
+Route::get('categories/{category}/thumbnail', 'API\ProductServiceController@showCategoryThumbnail')->name('productService.categories.thumbnail');
+Route::get('categories/{category}/products', 'API\ProductServiceController@showCategoryProducts')->name('productService.categories.products');
 
 Route::get('products', 'API\ProductServiceController@getProducts')->name('productService.products.index');
 Route::get('products/{product}', 'API\ProductServiceController@showProduct')->name('productService.products.show');

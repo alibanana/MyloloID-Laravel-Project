@@ -33,7 +33,7 @@ class ProductServiceController extends BaseController
     }
 
 
-    // Get category's details (including products)
+    // Show category's details (including products)
     public function showCategory($id)
     {
         $category = Category::find($id);
@@ -51,6 +51,38 @@ class ProductServiceController extends BaseController
         ];
 
         return $this->sendResponse($data, 'Category retrieved successfully.');
+    }
+
+
+    // Show category's thumbnail
+    public function showCategoryThumbnail($id)
+    {
+        $category = Category::find($id);
+
+        $thumbnail = $category->products->first()->photos->first();
+        
+        return $this->sendResponse($thumbnail->toArray(), "Category's thumbnail retrieved successfully.");
+    }
+
+
+    // Show category's thumbnail
+    public function showCategoryProducts(Request $request, $id)
+    {
+        $category = Category::find($id);
+
+        $products = Product::where('category_id', $category->id)->get();
+
+        if ($request->has('orderby'))
+        {
+            if ($request['orderby'] == 'price')
+            {
+                $products = Product::where('category_id', $category->id)->orderBy('price')->get();
+            } else {
+                $products = Product::where('category_id', $category->id)->orderBy('price', 'desc')->get();
+            }
+        }
+
+        return $this->sendResponse($products, "Category's products retrieved successfully.");
     }
 
 

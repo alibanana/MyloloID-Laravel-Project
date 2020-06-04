@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 use App\Category;
 use App\Product;
@@ -27,27 +28,26 @@ class ProductController extends Controller
     public function index()
     {
         // Gets first category available and call subindex
-        $category = Category::first()->category;
-        return redirect()->route('admin.product.category', [$category]);
+        $category = Http::get('http://mylolo-id.test/api/categories/first');
+        return redirect()->route('admin.product.category', [$category['data']['category']]);
     }
 
     public function subindex($category)
     {
-        $categories = Category::all();
+        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
 
         // Set active_category from the param given
         foreach ($categories as $category_itr)
         {
-            if ($category_itr->category == $category)
+            if ($category_itr['category'] == $category)
             {
                 $active_category = $category_itr;
             }
         }
 
-        // Get products
-        $products = $active_category->products()->get();
+        $products = Http::get('http://mylolo-id.test/api/categories/'.$active_category['id'])['data']['products'];
 
-        $photos = Photo::all();
+        $photos = Http::get('http://mylolo-id.test/api/photos')['data'];
 
         return view('admin/products', compact('categories', 'active_category', 'products', 'photos'));
     }
@@ -59,10 +59,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $materials = Material::all();
-        $colours = Colour::all();
-        $sizes = Size::all();
+        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
+        $materials =Http::get('http://mylolo-id.test/api/materials')['data'];
+        $colours = Http::get('http://mylolo-id.test/api/colours')['data'];
+        $sizes = Http::get('http://mylolo-id.test/api/sizes')['data'];
 
         return view('admin/products_create', compact('categories', 'materials', 'colours', 'sizes'));
     }
@@ -75,90 +75,34 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        
-        // Check Category
-        $category_inp = $input['category'];
-        $category_result = Category::where('category', $category_inp)->first();
-        // If category does not exist, create a new one.
-        if ($category_result == null){
-            $category = new Category;
-            $category->category = $category_inp;
-            $category->save();
-            $category_id = $category->id;
-        } else {
-            $category_id = $category_result->id;
-        }
+        $storeProduct = Http::post('http://mylolo-id.test/api/products', $request->toArray());
 
-        // Create Product
-        $product = new Product;
-        $product->category_id = $category_id;
-        $product->name = $input['name'];
-        $product->description = $input['description'];
-        $product->price = $input['price'];
-        $product->save();
-
-        // Check Mateials
-        $materials_inp = $input['materials'];
-        foreach ($materials_inp as $material_inp){
-            $material_result = Material::where('material', $material_inp)->first();
-            // Check if material exist, if not, create a new one.
-            if ($material_result == null){
-                $material = new Material;
-                $material->material = $material_inp;
-                $material->save();
-                $product->materials()->attach($material);
-            } else {
-                $product->materials()->attach($material_result);
+        // Delete all files in uplaods/temp
+        $files = glob('uploads/temp/*'); // get all file names
+        foreach($files as $file){ // iterate files
+            if(is_file($file))
+            {
+                unlink($file); // delete file
             }
         }
-
-        // Check Colours
-        $colours_inp = $input['colours'];
-        foreach ($colours_inp as $colour_inp){
-            $colour_result = Colour::where('colour', $colour_inp)->first();
-            // Check if colour exist, if not, create a new one.
-            if ($colour_result == null){
-                $colour = new Colour;
-                $colour->colour = $colour_inp;
-                $colour->save();
-                $product->colours()->attach($colour);
-            } else {
-                $product->colours()->attach($colour_result);
-            }
-        }
-
-        // Check Sizes
-        $sizes_inp = $input['sizes'];
-        foreach ($sizes_inp as $size_inp){
-            $size_result = Size::where('size', $size_inp)->first();
-            // Check if size exist, if not, create a new one.
-            if ($size_result == null){
-                $size = new Size;
-                $size->size = $size_inp;
-                $size->save();
-                $product->sizes()->attach($size);
-            } else {
-                $product->sizes()->attach($size_result);
-            }
-        }
-        
         // Upload Images
-        $images_inp = $input['images'];
+        $images_inp = $request['images'];
         foreach ($images_inp as $image_inp){
             $ext = $image_inp->getClientOriginalExtension();
             while(true){
                 $newName = rand(100000,1001238912).".".$ext;
 
-                if (!file_exists('uploads/images/'.$newName)){
-                    $image_inp->move('uploads/images', $newName);
+                if (!file_exists('uploads/temp/'.$newName)){
+                    $image_inp->move('uploads/temp', $newName);
                     break;
                 }
             }
-            $photo = new Photo;
-            $photo->product_id = $product->id;
-            $photo->file = $newName;
-            $photo->save();
+
+            $photo = fopen('uploads/temp/'.$newName, 'r');
+
+            $storePhoto = Http::attach(
+                'image', $photo, $newName
+            )->post('http://mylolo-id.test/api/photos', ['product_id' => $storeProduct['data']['id']]);;
         }
 
         return redirect('admin/products');
@@ -183,12 +127,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::all();
-        $materials = Material::all();
-        $colours = Colour::all();
-        $sizes = Size::all();
+        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
+        $materials =Http::get('http://mylolo-id.test/api/materials')['data'];
+        $colours = Http::get('http://mylolo-id.test/api/colours')['data'];
+        $sizes = Http::get('http://mylolo-id.test/api/sizes')['data'];
 
-        $product = Product::find($id);
+        $product = Http::get('http://mylolo-id.test/api/products/'.$id)['data'];
 
         return view('admin/products_edit', compact('categories', 'materials', 'colours', 'sizes', 'product'));
     }
@@ -202,110 +146,41 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        $product = Product::findorfail($id);
-
-        // Check Category
-        $category_result = Category::where('category', $input['category'])->first();
-        // If category does not exist, create a new one.
-        if ($category_result == null) { 
-            $category = new Category;
-            $category->category = $input['category'];
-            $category->save();
-            $category_id = $category->id;
-        } else {
-            $category_id = $category_result->id;
-        }
-
-        $product->category_id = $category_id;
-        $product->name = $input['name'];
-        $product->description = $input['description'];
-        $product->price = $input['price'];
-        $product->save();
-
-        // Detach all materials from product
-        $product->materials()->detach();
-
-        // Check Mateials
-        foreach ($input['materials'] as $material_inp){
-            $material_result = Material::where('material', $material_inp)->first();
-            // Check if material exist, if not, create a new one.
-            if ($material_result == null) {
-                $material = new Material;
-                $material->material = $material_inp;
-                $material->save();
-                $product->materials()->attach($material);
-            } else {
-                $product->materials()->attach($material_result);
-            }
-        }
-
-        // Detach all colours from product
-        $product->colours()->detach();
-
-        // Check Colours
-        foreach ($input['colours'] as $colour_inp){
-            $colour_result = Colour::where('colour', $colour_inp)->first();
-            // Check if colour exist, if not, create a new one.
-            if ($colour_result == null){
-                $colour = new Colour;
-                $colour->colour = $colour_inp;
-                $colour->save();
-                $product->colours()->attach($colour);
-            } else {
-                $product->colours()->attach($colour_result);
-            }
-        }
-
-        // Detach all sizes from producty
-        $product->sizes()->detach();
-
-        // Check Sizes
-        foreach ($input['sizes'] as $size_inp){
-            $size_result = Size::where('size', $size_inp)->first();
-            // Check if size exist, if not, create a new one.
-            if ($size_result == null){
-                $size = new Size;
-                $size->size = $size_inp;
-                $size->save();
-                $product->sizes()->attach($size);
-            } else {
-                $product->sizes()->attach($size_result);
-            }
-        }
+        $updateProduct = Http::put('http://mylolo-id.test/api/products/'.$id, $request->toArray());
 
         // Check if user inputed any photos
         if ($request->has('images')){
 
-            // Delete photos from upload folder
-            $photos = $product->photos;
-            foreach ($photos as $photo) {
-                $img_path = 'uploads/images/'.$photo->file;
-                unlink($img_path);
+            // Delete all files in uplaods/temp
+            $files = glob('uploads/temp/*'); // get all file names
+            foreach($files as $file){ // iterate files
+                if(is_file($file))
+                {
+                    unlink($file); // delete file
+                }
             }
 
-            // Delete photos from database
-            $product->photos()->delete();
+            $deleteProductPhotos = Http::delete('http://mylolo-id.test/api/products/'.$id.'/photos');
 
             // Upload Images
-            $images_inp = $input['images'];
+            $images_inp = $request['images'];
             foreach ($images_inp as $image_inp)
             {
                 $ext = $image_inp->getClientOriginalExtension();
-                while(true)
-                {
+                while(true){
                     $newName = rand(100000,1001238912).".".$ext;
 
-                    if (!file_exists('uploads/images/'.$newName))
-                    {
-                        $image_inp->move('uploads/images', $newName);
+                    if (!file_exists('uploads/temp/'.$newName)){
+                        $image_inp->move('uploads/temp', $newName);
                         break;
                     }
                 }
-                $photo = new Photo;
-                $photo->product_id = $product->id;
-                $photo->file = $newName;
-                $photo->save();
+
+                $photo = fopen('uploads/temp/'.$newName, 'r');
+
+                $storePhoto = Http::attach(
+                    'image', $photo, $newName
+                )->post('http://mylolo-id.test/api/photos', ['product_id' => $storeProduct['data']['id']]);;
             }
         }
 
@@ -320,17 +195,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findorfail($id);
+        $deleteProductPhotos = Http::delete('http://mylolo-id.test/api/products/'.$id.'/photos');
 
-        // Delete Photos
-        $photos = $product->photos;
-        foreach ($photos as $photo)
-        {
-            $img_path = 'uploads/images/'.$photo->file;
-            unlink($img_path);
-        }
-
-        $product->delete();
+        $deleteProduct = Http::delete('http://mylolo-id.test/api/products/'.$id);
 
         return redirect('admin/products');
     }

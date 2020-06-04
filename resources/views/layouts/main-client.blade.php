@@ -55,12 +55,11 @@
                   <li class="has-children">
                     <a href="/catalogue">Catalogue</a>
                     <ul class="dropdown">
-                      <li><a href="#">Bottoms</a></li>
-                      <li><a href="#">Blazers/Jacket</a></li>
-                      <li><a href="#">Outers-Coat</a></li>
-                      <li><a href="#">Tops</a></li>
-                      <li><a href="#">Dresses</a></li>
-                      <li><a href="#">Jumpsuits</a></li>
+                      @foreach ($categories as $category)
+                      <li><a
+                          href="{{ route('catalogue.category', ['category' => $category['category']]) }}">{{ $category['category'] }}</a>
+                      </li>
+                      @endforeach
                     </ul>
                   </li>
                   <li><a href="/cart">Cart</a></li>

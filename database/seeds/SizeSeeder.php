@@ -17,6 +17,9 @@ class SizeSeeder extends Seeder
                 'size'=>'All Size',
             ],
             [
+                'size'=>'XS',
+            ],
+            [
                 'size'=>'S',
             ],
             [
@@ -24,6 +27,12 @@ class SizeSeeder extends Seeder
             ],
             [
                 'size'=>'L',
+            ],
+            [
+                'size'=>'XL',
+            ],
+            [
+                'size'=>'XXL',
             ],
         ];
 

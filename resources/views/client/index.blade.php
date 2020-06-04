@@ -67,72 +67,22 @@
 <div class="site-section site-blocks-2">
   <div class="container">
     <div class="row">
+      @foreach ($categories as $category)
       <div class="col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade" data-aos-delay="">
-        <a class="block-2-item" href="#">
+        <a class="block-2-item category-thumbnail"
+          href="{{ route('catalogue.category', ['category' => $category['category']]) }}">
           <figure class="image">
-            <img src="images/homepage/collection_bottom.jpg" alt="" class="img-fluid">
+            <img
+              src="{{ asset('uploads/images/'.(Http::get('http://mylolo-id.test/api/categories/'.$category['id'].'/thumbnail')['data']['file'])) }}"
+              alt="" class="img-fluid">
           </figure>
           <div class="text">
             <span class="text-uppercase">Collections</span>
-            <h3>Bottoms</h3>
+            <h3>{{ $category['category'] }}</h3>
           </div>
         </a>
       </div>
-      <div class="col-sm-6 col-md-6 col-lg-4 mb-5" data-aos="fade" data-aos-delay="100">
-        <a class="block-2-item" href="#">
-          <figure class="image">
-            <img src="images/homepage/collection_jacket.jpg" alt="" class="img-fluid">
-          </figure>
-          <div class="text">
-            <span class="text-uppercase">Collections</span>
-            <h3>Blazers / Jackets</h3>
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-6 col-md-6 col-lg-4 mb-5" data-aos="fade" data-aos-delay="200">
-        <a class="block-2-item" href="#">
-          <figure class="image">
-            <img src="images/homepage/collection_coat.jpg" alt="" class="img-fluid">
-          </figure>
-          <div class="text">
-            <span class="text-uppercase">Collections</span>
-            <h3>Outers-Coat</h3>
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-6 col-md-6 col-lg-4 mb-5" data-aos="fade" data-aos-delay="200">
-        <a class="block-2-item" href="#">
-          <figure class="image">
-            <img src="images/homepage/collection_tops.jpg" alt="" class="img-fluid">
-          </figure>
-          <div class="text">
-            <span class="text-uppercase">Collections</span>
-            <h3>Tops</h3>
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-6 col-md-6 col-lg-4 mb-5" data-aos="fade" data-aos-delay="200">
-        <a class="block-2-item" href="#">
-          <figure class="image">
-            <img src="images/homepage/collection_dress.jpg" alt="" class="img-fluid">
-          </figure>
-          <div class="text">
-            <span class="text-uppercase">Collections</span>
-            <h3>Dresses</h3>
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-6 col-md-6 col-lg-4 mb-5" data-aos="fade" data-aos-delay="200">
-        <a class="block-2-item" href="#">
-          <figure class="image">
-            <img src="images/homepage/collection_jumpsuits.jpg" alt="" class="img-fluid">
-          </figure>
-          <div class="text">
-            <span class="text-uppercase">Collections</span>
-            <h3>Jumpsuits</h3>
-          </div>
-        </a>
-      </div>
+      @endforeach
     </div>
   </div>
 </div>

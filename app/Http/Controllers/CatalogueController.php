@@ -23,7 +23,7 @@ class CatalogueController extends Controller
         return redirect('catalogue/'.$response['data']['category']);
     }
 
-    public function subindex($category)
+    public function subindex(Request $request, $category)
     {
         $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
 
@@ -36,10 +36,17 @@ class CatalogueController extends Controller
             }
         }
 
-        // Get products in that category
-        $products = Http::get('http://mylolo-id.test/api/categories/'.$active_category['id'])['data']['products'];
+        $params = array();
 
-        return view('client/catalogue', compact('categories', 'active_category', 'products'));
+        if ($request->has('orderby'))
+        {
+            $params['orderby'] = $request['orderby'];
+        }
+
+        // Get products in that category
+        $products = Http::get('http://mylolo-id.test/api/categories/'.$active_category['id'].'/products', $params)['data'];
+
+        return view('client/catalogue', compact('categories', 'active_category', 'products', 'params'));
     }
 
     /**

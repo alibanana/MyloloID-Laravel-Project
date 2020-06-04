@@ -40,7 +40,7 @@ Route::get('/admin/reports', 'Admin\AdminPagesController@reports')->name('admin.
 Route::get('/admin/profile', 'Admin\AdminPagesController@profile')->name('admin.profile')->middleware('is_admin');
 
 // Products Routes
-Route::resource('/admin/products', 'Admin\ProductController')->middleware('is_admin');
+Route::resource('/admin/products', 'Admin\ProductController', ['as' => 'admin'])->middleware('is_admin');
 Route::get('/admin/products/category/{category}', 'Admin\ProductController@subindex')->name('admin.product.category')->middleware('is_admin');
 
 // User Routes
