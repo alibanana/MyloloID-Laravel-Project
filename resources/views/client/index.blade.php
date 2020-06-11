@@ -73,7 +73,7 @@
           href="{{ route('catalogue.category', ['category' => $category['category']]) }}">
           <figure class="image">
             <img
-              src="{{ asset('uploads/images/'.(Http::get('http://mylolo-id.test/api/categories/'.$category['id'].'/thumbnail')['data']['file'])) }}"
+              src="{{ asset('uploads/images/'.(Http::get(url('/api/categories/'.$category['id'].'/thumbnail'))['data']['file'])) }}"
               alt="" class="img-fluid">
           </figure>
           <div class="text">

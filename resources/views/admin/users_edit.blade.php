@@ -27,38 +27,43 @@
 </div>
 @endif
 
-<form enctype="multipart/form-data" action="{{ route('users.update', $user->id) }}" method="post">
+<form enctype="multipart/form-data" action="{{ route('users.update', $user['id']) }}" method="post">
   {{ csrf_field() }}
   {{ method_field('PUT') }}
 
     {{-- User Name --}}
     <div class="form-group">
       <label for="inputUser">Nama</label>
-      <input type="text" class="form-control" id="inputUserName" name="name" value ="{{$user->name}}" placeholder="John Doe"
+      <input type="text" class="form-control" id="inputUserName" name="name" value ="{{$user['name']}}" placeholder="John Doe"
         required>
     </div>
 
     {{-- User Email --}}
     <div class="form-group">
       <label for="inputUser">Email</label>
-      <input type="text" class="form-control" id="inputUserEmail" name="email" value ="{{$user->email}}" placeholder="johndoe@test.com"
+      <input type="text" class="form-control" id="inputUserEmail" name="email" value ="{{$user['email']}}" placeholder="johndoe@test.com"
         required>
     </div>
 
     {{-- User Phone --}}
     <div class="form-group">
       <label for="inputUser">Nomor Telpon</label>
-      <input type="text" class="form-control" id="inputUserPhone" name="phone" value ="{{$user->phone}}" placeholder="081212341234"
+      <input type="text" class="form-control" id="inputUserPhone" name="phone" value ="{{$user['phone']}}" placeholder="081212341234"
         required>
     </div>
 
     {{-- User IsAdmin --}}
     <div class="form-group">
         <label for="inputCategory">Status Admin</label>
-        <select id="inputCategory" class="form-control" name="is_admin" required>
-            <option @if (!$user->is_admin) selected @endif>Client</option>
-            <option @if ($user->is_admin) selected @endif>Admin</option>
-        </select>
+        {{-- <select id="inputCategory" class="form-control" name="is_admin" required>
+            <option @if (!$user['is_admin']) selected @endif>Client</option>
+            <option @if ($user['is_admin']) selected @endif>Admin</option>
+        </select> --}}
+        @if (!$user['is_admin'])
+        <input type="text" class="form-control" value='Client' id="inputCategory" readonly>
+        @else 
+        <input type="text" class="form-control" value='Admin' id="inputCategory" readonly>
+        @endif
     </div>
 
     {{-- Submit & Cancel Button --}}

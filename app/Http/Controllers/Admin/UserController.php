@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 use App\User;
@@ -22,7 +23,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all()->toArray();
+        $users = Http::get(url('/api/users'));
+
         return view('admin/users', compact('users'));
     }
 
@@ -33,7 +35,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
         return view('admin/users_create');
     }
 
@@ -45,23 +46,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'min:10', 'max:13'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $user = new User([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => bcrypt($input['password']),
-            'phone' => $input['phone'],
-        ]);
-
-        $user->save(); 
+        $createUser = Http::post(url('/api/users/'), $request->toArray());
 
         return redirect()->route('users.index')->with('success','User Added');
     }
@@ -85,7 +70,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = Http::get(url('/api/users/'.$id))['data'];
 
         return view('admin/users_edit', compact('user'));    
     }
@@ -99,45 +84,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validation = Validator::make ($request->all(), [
-            'name'=> 'required|alpha',
-            'email'=> 'required|email',
-            'phone'=> 'required|min:10|max:13',
-            'is_admin'=> 'required',
-        ]);
+        $updateUser = Http::put(url('/api/users/'.$id), $request->toArray());
 
-        if($validation->fails()){
-            return redirect()->route('users.index')->with('error','Validation Error');     
-        }
-
-        $user = User::find($id);
-        $user->name = $request->get('name');
-
-        if (!($request->get('email') == $user->email))
-        {
-            $validation = Validator::make ($request->all(), [
-                'email'=> 'unique.users',
-            ]);
-
-            if($validation->fails()){
-                return redirect()->route('users.index')->with('error','Email has already been used');     
-            }
-
-            $user->email = $request->get('email');
-        }
-
-        $user->phone = $request->get('phone');
-
-        if ($request->get('is_admin') == "Admin")
-        {
-            $user->is_admin = 1;
-        } else {
-            $user->is_admin = 0;
-        }
-
-        $user->save(); 
-
-        return redirect()->route('users.index')->with('success','User Added');
+        return redirect()->route('users.index')->with('success','User Updated');
     }
 
     /**
@@ -148,9 +97,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $user = User::find($id);
-        $user->delete();
+        $deleteUser = Http::delete(url('/api/users/'.$id));     
 
         return redirect()->route('users.index')->with('success', 'Data Deleted');
     }

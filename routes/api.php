@@ -14,15 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('register', 'API\RegisterController@register');
 
-// Route::middleware('auth:api')->group( function () {
-
-// });
+Route::middleware('auth:api')->group( function () {
+    Route::get('products', 'API\ProductServiceController@getProducts')->name('productService.products.index');
+});
 
 Route::post('register', 'API\RegisterController@register');
+
+// User Services
+Route::get('users', 'API\UserServiceController@getUsers')->name('userService.user.index');
+Route::get('users/{id}', 'API\UserServiceController@getUser')->name('userService.user.show');
+Route::post('users', 'API\UserServiceController@createUser')->name('userService.user.store');
+Route::match(['put', 'patch'],'users/{id}', 'API\UserServiceController@updateUser')->name('userService.user.update');
+Route::delete('users/{id}', 'API\UserServiceController@destroyUser')->name('userService.user.delete');
 
 
 // Product Services
@@ -32,7 +37,6 @@ Route::get('categories/{category}', 'API\ProductServiceController@showCategory')
 Route::get('categories/{category}/thumbnail', 'API\ProductServiceController@showCategoryThumbnail')->name('productService.categories.thumbnail');
 Route::get('categories/{category}/products', 'API\ProductServiceController@showCategoryProducts')->name('productService.categories.products');
 
-Route::get('products', 'API\ProductServiceController@getProducts')->name('productService.products.index');
 Route::get('products/{product}', 'API\ProductServiceController@showProduct')->name('productService.products.show');
 Route::get('products/{product}/thumbnail', 'API\ProductServiceController@showProductThumbnail')->name('productService.products.thumbnail');
 Route::post('products', 'API\ProductServiceController@storeProduct')->name('productService.products.store');

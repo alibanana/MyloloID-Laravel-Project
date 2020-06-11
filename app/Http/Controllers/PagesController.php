@@ -9,14 +9,14 @@ class PagesController extends Controller
 {
     public function home()
     {
-        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
+        $categories = Http::get(url('/api/categories'))['data'];
 
         return view('client/index', compact('categories'));
     }
 
     public function cart()
     {
-        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
+        $categories = Http::get(url('/api/categories'))['data'];
 
         return view('client/shopping_cart', compact('categories'));
     }

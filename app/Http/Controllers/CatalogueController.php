@@ -18,14 +18,14 @@ class CatalogueController extends Controller
     public function index()
     { 
         // Gets first category available and call subindex
-        $response = Http::get('http://mylolo-id.test/api/categories/first');
+        $response = Http::get('http://myloloid.test/api/categories/first');
 
         return redirect('catalogue/'.$response['data']['category']);
     }
 
     public function subindex(Request $request, $category)
     {
-        $categories = Http::get('http://mylolo-id.test/api/categories')['data'];
+        $categories = Http::get('http://myloloid.test/api/categories')['data'];
 
         // Set active_category from the param given
         foreach ($categories as $category_itr)
@@ -44,7 +44,7 @@ class CatalogueController extends Controller
         }
 
         // Get products in that category
-        $products = Http::get('http://mylolo-id.test/api/categories/'.$active_category['id'].'/products', $params)['data'];
+        $products = Http::get('http://myloloid.test/api/categories/'.$active_category['id'].'/products', $params)['data'];
 
         return view('client/catalogue', compact('categories', 'active_category', 'products', 'params'));
     }

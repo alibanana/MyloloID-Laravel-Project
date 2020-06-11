@@ -51,12 +51,29 @@
         required>
     </div>
 
+    {{-- User IsAdmin --}}
+    <div class="form-group">
+      <label for="inputCategory">Status Admin</label>
+      <select id="inputCategory" class="form-control" name="is_admin" required>
+          <option selected>Client</option>
+          <option>Admin</option>
+      </select>
+    </div>
+
     {{-- User Password --}}
     <div class="form-group">
       <label for="inputUser">Password</label>
       <input type="password" class="form-control" id="inputUserPassword" name="password"
         required>
     </div>
+
+    {{-- User Confirm Password --}}
+    <div class="form-group">
+      <label for="inputUser">Confirm Password</label>
+      <input type="password" class="form-control" id="inputUserPassword" name="c_password"
+        required>
+    </div>
+    
     {{-- Submit & Cancel Button --}}
     <div class="container">
         <div class="form-group">

@@ -21,7 +21,7 @@
   </thead>
 
   <tbody>
-    @foreach($users as $row)
+    @foreach($users['data'] as $row)
     <tr>
         <td>{{$row['name']}}</td>
         <td>{{$row['email']}}</td>

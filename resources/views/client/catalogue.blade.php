@@ -62,7 +62,7 @@
           <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
             <div class="product-container">
               <div class="row product-thumbnail justify-content-center align-items-top m-0"><img
-                  src="{{ asset('uploads/images/'.(Http::get('http://mylolo-id.test/api/products/'.$product['id'].'/thumbnail')['data']['file'])) }}"
+                  src="{{ asset('uploads/images/'.(Http::get('http://myloloid.test/api/products/'.$product['id'].'/thumbnail')['data']['file'])) }}"
                   alt="Image placeholder" class="">
               </div>
               <div class="text-center product-thumbnail-text">
@@ -139,7 +139,7 @@
                 href="{{ route('catalogue.category', ['category' => $category['category']]) }}">
                 <figure class="image">
                   <img
-                    src="{{ asset('uploads/images/'.(Http::get('http://mylolo-id.test/api/categories/'.$category['id'].'/thumbnail')['data']['file'])) }}"
+                    src="{{ asset('uploads/images/'.(Http::get('http://myloloid.test/api/categories/'.$category['id'].'/thumbnail')['data']['file'])) }}"
                     alt="" class="img-fluid">
                 </figure>
                 <div class="text">
