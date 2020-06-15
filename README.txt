@@ -9,6 +9,7 @@ How to Deploy Locally
 
 - php artisan migrate:rollback
 - php artisan migrate --seed
+- php artisan serve or php artisan key:generate
 
 
 Login Information
